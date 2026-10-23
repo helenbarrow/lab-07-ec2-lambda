@@ -14,6 +14,8 @@ Suppose your instance is running and has a public IP address, but `ssh` cannot c
 
 **Your answer:** Which path did you take in the console (service → page → tab)?
 
+--> search EC2 -> click "Instances" -> click "ec2-console" -> "security" tab
+
 ...
 
 ## 2. Lambda: why didn't my function run?
@@ -26,6 +28,8 @@ Suppose you uploaded a new book to your bucket, but several minutes later MongoD
 
 **Your answer:** Which path did you take in the console (service → page → tab)?
 
+--> search "Lambda" -> "Event "Functions" -> "book-analyzer-dev-analyze_new_book" -> configuration -> triggers -> s3 public-vck9an -> properties -> event notifs
+
 ...
 
 ## 3. Lambda: where do I find the error?
@@ -37,6 +41,8 @@ Suppose the function did start, but MongoDB still has no document for the book. 
 *Hint:* [Part 2, Step 7](README.md#step-7-upload-a-new-book) in the README, and the class demo [A Lambda function in the AWS Console](https://github.com/ksiller/DS2022/blob/main/demos/07-lambda/README.md), step [7. Check the CloudWatch logs](https://github.com/ksiller/DS2022/blob/main/demos/07-lambda/README.md#7-check-the-cloudwatch-logs).
 
 **Your answer:** Which path did you take in the console (service → page → tab)?
+--> lambda -> event function -> "book-analyzer-dev-analyze_new_book" -> monitor -> view cloudwatch logs -> 2026/10/22[$LATEST]...
+
 
 ...
 
@@ -53,5 +59,10 @@ For comparison, typical times in this lab:
 - **Lambda** (512 MB): about 2 seconds for one book, including about 1 second to start the function the first time (a cold start). The function runs, and costs, only while a book is analyzed.
 
 **Your answer:**
-
+--> You'd use EC2 for Case A because you receive the upload & perform the analyzation at once.
+EC2's timing and pricing coordination is more aligned with consistency rather than randomness due 
+to it's time to start the instance and run the bootstrap & costs for wait-time.
+--> You'd use Lambda for Case B because uploads are randomized and there is a time crunch of one minute
+after each book. Lambda closely aligns with this with its 2 seconds per book and cost only during 
+analyzation. Lambda is therefore best suited for unpredicable, rare events. 
 ...
